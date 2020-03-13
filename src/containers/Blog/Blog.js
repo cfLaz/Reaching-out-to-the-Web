@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
+import axios from '../../axios';
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
@@ -9,10 +10,11 @@ class Blog extends Component {
     state = {
         posts: [],
         selectedPostId: null,
+        error: false,
     }
-    componentDidMount () {
+    componentDidMount () { //put wrong url to catch(error)
         axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
-
+            console.log('componentDidMount')
             const posts = response.data.slice(0,4);
             const updatedPosts = posts.map(post => {
                 return {
@@ -23,14 +25,18 @@ class Blog extends Component {
 
             this.setState({posts: updatedPosts})
             //console.log(response)
+        }).catch(error=>{
+            //consolelog(error);
+            this.setState({error: true});
         });
     }
     postSelectedHandler=(id)=> {
         this.setState({SelectedPostId: id});
     }
     render () {
-
-        const posts = this.state.posts.map(
+        let posts = <p style={{textAlign:'center'}}>Something went wrong! :( </p>;
+        if(!this.state.error){
+            posts = this.state.posts.map(
             post =>{
                 return <Post 
                 title={post.title}
@@ -40,6 +46,7 @@ class Blog extends Component {
                 />
             }
         );
+        }
         return (
             <div>
                 <section className="Posts">
