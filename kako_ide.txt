@@ -1,7 +1,16 @@
-U blogu povlaci podatke(json) sa dummy servera, preobradjuje ih ( uzima prva 4 elemnta i na svaki stavlja dodatnu variablu), izbacuje na stranicu za prikaz.
+Prije routing-a { U blogu povlaci podatke(json) sa dummy servera, preobradjuje ih ( uzima prva 4 elementa i na svaki stavlja dodatnu variablu), izbacuje na stranicu za prikaz.
 
 FullPost i NewPost su u blogu, Full post prikazuje post koji izaberemo od povucenih, i sadrzi delete za brisanje istog.
 
 NewPost predstavlja obrazac gdje se unose/biraju podaci za novi element (post) koji se salje u JSON koji je na serveru.
 
 Post.js je komponenta koja daje strukturu jednog post-a.
+}
+
+
+
+
+"userId": 1,
+    "id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"

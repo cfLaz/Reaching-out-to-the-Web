@@ -1,67 +1,57 @@
 import React, { Component } from 'react';
+import {Route, Link} from 'react-router-dom';
 //import axios from 'axios';
 import axios from '../../axios';
-import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
+import Posts from './Posts/Posts';
+
+import NewPost from './NewPost/NewPost';
+
 
 class Blog extends Component {
-    state = {
-        posts: [],
-        selectedPostId: null,
-        error: false,
-    }
-    componentDidMount () { //put wrong url to catch(error)
-        axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
-            console.log('componentDidMount')
-            const posts = response.data.slice(0,4);
-            const updatedPosts = posts.map(post => {
-                return {
-                    ...post,
-                    author: 'Laz'
-                }
-            });
-
-            this.setState({posts: updatedPosts})
-            //console.log(response)
-        }).catch(error=>{
-            //consolelog(error);
-            this.setState({error: true});
-        });
-    }
-    postSelectedHandler=(id)=> {
-        this.setState({SelectedPostId: id});
-    }
+    
+    
+    
     render () {
-        let posts = <p style={{textAlign:'center'}}>Something went wrong! :( </p>;
-        if(!this.state.error){
-            posts = this.state.posts.map(
-            post =>{
-                return <Post 
-                title={post.title}
-                key={post.id}
-                author = {post.author}
-                clicked={()=> this.postSelectedHandler(post.id)}
-                />
-            }
-        );
-        }
+        
         return (
-            <div>
-                <section className="Posts">
-                    {posts}
+            <div className="Blog">
+                <header>
+                    <nav>
+                        <ul>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to={{
+                                // pathname: this.props.mathc.url (gives current path that you're on)+'/new-post', - creates a relative path, otherwise it's 'absolute' path
+                                pathname: 'new-post', //absolute path is always appended to the root domain
+                                hash: '#submit', // would allow us to jump to any id submit we have
+                                search: '?quick-submit=true'
+                            }}>
+                                New Post
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
 
-                </section>
-                <section>
-                    <FullPost 
-                    id={this.state.SelectedPostId}
-                    
-                    />
-                </section>
-                <section>
-                    <NewPost />
-                </section>
+                <Route
+                path="/"
+                exact
+                component = {Posts}
+                />
+                 <Route
+                path="/new-post"
+                component = {NewPost}
+                />
+                {/* <Route
+                path="/" //tell router does the path start with this?
+                exact //is complete path like this?
+                render = {()=> <h1>Home</h1>} //what to render on the screen
+                />
+                <Route
+                path="/" //tell router does the path start with this?
+                // no exact -> does path had this prefix (in this case '/')
+                render = {()=> <h1>Home2</h1>} //what to render on the screen
+                /> */}
             </div>
         );
     }

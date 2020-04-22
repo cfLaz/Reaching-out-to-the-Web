@@ -5,7 +5,7 @@ import './FullPost.css';
 class FullPost extends Component {
     state={
         loadedPost: null,
-        selectedPost: false, // ja dodao zbog delete, da ukloni novi post sa stranice a ne samo da posalje zahtjev za delete na server
+        selectedPost: false, // [nedobro] ja dodao zbog delete, da ukloni novi post sa stranice a ne samo da posalje zahtjev za delete na server
     }
 
     componentDidUpdate() { //prvjerava da li je uopste ucitan neki post ili da li je ucitan post i da je taj post novi.
