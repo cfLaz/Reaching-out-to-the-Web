@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom';
+import {Route, NavLink} from 'react-router-dom';
 //import axios from 'axios';
 import axios from '../../axios';
 import './Blog.css';
 import Posts from './Posts/Posts';
-
 import NewPost from './NewPost/NewPost';
-
+import FullPost from './FullPost/FullPost';
 
 class Blog extends Component {
     
@@ -19,15 +18,28 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to={{
+                            <li><NavLink 
+                                to="/" 
+                                exact
+                                activeClassName='my-active' //'active' is default
+                                activeStyle={{
+                                    color: 'green',
+                                    textDecoration: 'underline',
+                                }}
+                                >
+                                    Home
+                                </NavLink>
+                            </li>
+                            <li><NavLink to={{
                                 // pathname: this.props.mathc.url (gives current path that you're on)+'/new-post', - creates a relative path, otherwise it's 'absolute' path
-                                pathname: 'new-post', //absolute path is always appended to the root domain
+                                pathname: '/new-post', //added '/' because otherwise it's not orange when it's active
+                                //absolute path is always appended to the root domain
+
                                 hash: '#submit', // would allow us to jump to any id submit we have
                                 search: '?quick-submit=true'
                             }}>
                                 New Post
-                                </Link>
+                                </NavLink>
                             </li>
                         </ul>
                     </nav>
@@ -41,6 +53,11 @@ class Blog extends Component {
                  <Route
                 path="/new-post"
                 component = {NewPost}
+                />
+                <Route
+                path='/:id'
+                exact
+                component = {FullPost}
                 />
                 {/* <Route
                 path="/" //tell router does the path start with this?
