@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import axios from '../../../axios';
 import Post from '../../../components/Post/Post';
 import {Link} from 'react-router-dom';
+import './Posts.css';
 class Posts extends Component {
     state = {
         posts: [],
     
     }
     componentDidMount () { //put wrong url to catch(error)
-        console.log(this.props);
-        axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
+        //console.log(this.props);
+        axios.get('/posts').then(response => {
             console.log('componentDidMount')
             const posts = response.data.slice(0,4);
             const updatedPosts = posts.map(post => {
@@ -36,7 +37,8 @@ class Posts extends Component {
             if(!this.state.error){
                 posts = this.state.posts.map(
                 post =>{
-                    return <Link to={'/'+post.id} key={post.id}>
+                    return (
+                    <Link to={'/'+post.id} key={post.id}>
                     <Post 
                     title={post.title}
                     author = {post.author}
@@ -44,6 +46,7 @@ class Posts extends Component {
                     //{...this.props} //passes any props Posts.js has, to Post component...but we can use withRouter 
                     />
                     </Link>
+                    )
                 }
             );
             }

@@ -44,7 +44,7 @@ class Blog extends Component {
                         </ul>
                     </nav>
                 </header>
-
+                {/* parsed from top to bottom */}
                 <Route
                 path="/"
                 exact
@@ -55,7 +55,7 @@ class Blog extends Component {
                 component = {NewPost}
                 />
                 <Route
-                path='/:id'
+                path="/:id"
                 exact
                 component = {FullPost}
                 />

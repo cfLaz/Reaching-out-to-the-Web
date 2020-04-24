@@ -5,21 +5,24 @@ import './FullPost.css';
 class FullPost extends Component {
     state={
         loadedPost: null,
-        selectedPost: false, // [nedobro] ja dodao zbog delete, da ukloni novi post sa stranice a ne samo da posalje zahtjev za delete na server
+        //selectedPost: false, // [nedobro] ja dodao zbog delete, da ukloni novi post sa stranice a ne samo da posalje zahtjev za delete na server
     }
+    //was set up beofre as componentDidUpdate() since we were updating it but now we are adding or removing it
+    //^prvjerava da li je uopste ucitan neki post ili da li je ucitan post i da je taj post novi.
+    componentDidMount() { //prvjerava da li je uopste ucitan neki post ili da li je ucitan post i da je taj post novi.
+        console.log(this.props);
 
-    componentDidUpdate() { //prvjerava da li je uopste ucitan neki post ili da li je ucitan post i da je taj post novi.
-        if (this.props.id)
-        if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)){
+        if (this.props.match.params.id)
+        if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id)){
 
-        axios.get('posts/'+ this.props.id).then( response => {
+        axios.get('/posts/'+ this.props.match.params.id).then( response => {
                 console.log(response);
                 this.setState({loadedPost: response.data})
             });
         }
     } 
     deletePostHandler =() => {
-        axios.delete('posts/'+ this.props.id).then(responde => {
+        axios.delete('/posts/'+ this.props.match.params.id).then(responde => {
             console.log(responde); 
        });
        this.setState({loadedPost: null,});
@@ -32,7 +35,7 @@ class FullPost extends Component {
         let post = <p style={{textAlign: 'center'}}>
             Please select a Post!
             </p>;
-        if (this.props.id ){
+        if (this.props.match.params.id ){
             post= <p style={{textAlign: 'center'}}>Loading...!</p>;
         }
 

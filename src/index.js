@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
-/* 
+ 
 axios.defaults.baseURL ='https://jsonplaceholder.typicode.com/';
 axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
 axios.defaults.headers.post['Content-Type'] = 'AUTH TOKEN';
@@ -24,7 +24,7 @@ axios.interceptors.response.use(response => {
 }, error =>{
     console.log(error);
     return Promise.reject(error)
-}); */
+}); 
 // Getting rid of interceptors
 //var myInterceptor = axios.interceptors.request.use(function () {/*...*/});
 // axios.interceptors.request.eject(myInterceptor);
