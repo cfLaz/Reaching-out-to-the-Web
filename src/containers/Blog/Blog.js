@@ -4,12 +4,18 @@ import {Route, NavLink, Switch, Redirect} from 'react-router-dom';
 import axios from '../../axios';
 import './Blog.css';
 import Posts from './Posts/Posts';
-import NewPost from './NewPost/NewPost';
-//
+import asyncComp from '../../hoc/AsyncComp';
+//import NewPost from './NewPost/NewPost';
+
+const AsyncNewPost = asyncComp(() => {
+    return import('./NewPost/NewPost');
+});
 
 class Blog extends Component {
     
-    
+    state= {
+        auth: true,
+    }
     
     render () {
         
@@ -47,16 +53,22 @@ class Blog extends Component {
                 {/* parsed from top to bottom */}
                 {/* all routes are rendered if they match the path, to prevent that, we can use Switch */}
                 
-                 <Switch> {/*Switch tells us to load just one route, first one that matches */}
-                    <Route
-                    path="/new-post"
-                    component = {NewPost}
-                    />
+                <Switch> {/*Switch tells us to load just one route, first one that matches */}
+                    {this.state.auth ?
+                        <Route
+                        path="/new-post"
+                        component = {AsyncNewPost}
+                        /> :
+                        null
+                    }
                     <Route
                     path="/posts"
                     component = {Posts}
                     />
-                    <Redirect from='/' to='posts'/>
+
+                    <Route render={ ()=> <h1>Not found</h1>}/> {/* it will output this on the page in case any unknown path is used */}
+                    {/* <Redirect from='/' to='/posts'/> */} {/* acting as a "guard" here, if author is not authenticated it will not reach /new-post but will get redirected to /posts */}
+                </Switch>
                     {/* <Route 
                     path="/" //so that we redirect the user to posts compoenent eve if he is at the root of the path (can do it in Redirect ^^)
                     component = {Posts}
@@ -67,7 +79,7 @@ class Blog extends Component {
                     exact
                     component = {FullPost}
                     /> */}
-                </Switch>
+                
                 {/* <Route
                 path="/" //tell router does the path start with this?
                 exact //is complete path like this?

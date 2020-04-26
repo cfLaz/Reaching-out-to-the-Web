@@ -11,6 +11,7 @@ class NewPost extends Component {
         submitted: false,
     }
     componentDidMount () {
+        // alternative to if user is unauthenticated => this.props.history.replace('/posts');
         console.log(this.props);
     }
     postDataHandler = () => {
@@ -22,13 +23,15 @@ class NewPost extends Component {
 
         axios.post('/posts', post).then(response=>{
             console.log(response);
-            this.setState({submitted: true});
+            this.props.history.push('/posts');
+            // .replace() would do the same as <Redirect> , which will replace the page in the "stack" and we won't be able to come back (<- or backspace) to newPost, with push() we can, because it just pushed a new page on top of the stack (doesn't replace it).
+            //this.setState({submitted: true});
         });
         
     }
     render () {
         let redirect = null;
-        if(this.state.submitted){
+        if(this.state.submitted){//never rans because we put history.push() in postDataHandler
             redirect = <Redirect to="/posts"/>;
         }
         return (
