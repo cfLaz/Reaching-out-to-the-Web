@@ -7,8 +7,11 @@ NewPost predstavlja obrazac gdje se unose/biraju podaci za novi element (post) k
 Post.js je komponenta koja daje strukturu jednog post-a.
 }
 
+-----------------
+<Link/> <Route/>
+{Posts} uzima postove sa json sajta, svaki post ima clickable funkciju koja salje id posta kao dodatak za path, Route preusmjerava rendering prema tome. Fullpost se aktivira i uzima id i koristi ga za skidanje posta sa json sajta i prikazuje vise detalja o postu.
 
-
+-------------
 
 "userId": 1,
     "id": 1,

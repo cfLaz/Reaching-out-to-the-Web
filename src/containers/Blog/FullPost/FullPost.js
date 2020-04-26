@@ -12,15 +12,22 @@ class FullPost extends Component {
     componentDidMount() { //prvjerava da li je uopste ucitan neki post ili da li je ucitan post i da je taj post novi.
         console.log(this.props);
 
+        this.loadData();
+    } 
+    componentDidUpdate(){
+        console.log(this.props);
+        this.loadData();
+    }
+    loadData(){
         if (this.props.match.params.id)
-        if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id)){
+        if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id != /* or we can leave !== and add + to convert params.id to number (since it is a string) */ this.props.match.params.id)){
 
         axios.get('/posts/'+ this.props.match.params.id).then( response => {
                 console.log(response);
                 this.setState({loadedPost: response.data})
             });
         }
-    } 
+    }
     deletePostHandler =() => {
         axios.delete('/posts/'+ this.props.match.params.id).then(responde => {
             console.log(responde); 
@@ -31,8 +38,9 @@ class FullPost extends Component {
              </p>;
              return post; */
     }
+    
     render () {
-        let post = <p style={{textAlign: 'center'}}>
+        let post = <p style={{textAlign: 'center'}}> {/* unnecessary now? */}
             Please select a Post!
             </p>;
         if (this.props.match.params.id ){
@@ -58,6 +66,7 @@ class FullPost extends Component {
         
         return post;
     }
+    
 }
 
 export default FullPost;

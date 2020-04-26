@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Route, NavLink} from 'react-router-dom';
+import {Route, NavLink, Switch, Redirect} from 'react-router-dom';
 //import axios from 'axios';
 import axios from '../../axios';
 import './Blog.css';
 import Posts from './Posts/Posts';
 import NewPost from './NewPost/NewPost';
-import FullPost from './FullPost/FullPost';
+//
 
 class Blog extends Component {
     
@@ -19,7 +19,7 @@ class Blog extends Component {
                     <nav>
                         <ul>
                             <li><NavLink 
-                                to="/" 
+                                to="/posts/" 
                                 exact
                                 activeClassName='my-active' //'active' is default
                                 activeStyle={{
@@ -27,7 +27,7 @@ class Blog extends Component {
                                     textDecoration: 'underline',
                                 }}
                                 >
-                                    Home
+                                    Posts
                                 </NavLink>
                             </li>
                             <li><NavLink to={{
@@ -45,29 +45,36 @@ class Blog extends Component {
                     </nav>
                 </header>
                 {/* parsed from top to bottom */}
-                <Route
-                path="/"
-                exact
-                component = {Posts}
-                />
-                 <Route
-                path="/new-post"
-                component = {NewPost}
-                />
-                <Route
-                path="/:id"
-                exact
-                component = {FullPost}
-                />
+                {/* all routes are rendered if they match the path, to prevent that, we can use Switch */}
+                
+                 <Switch> {/*Switch tells us to load just one route, first one that matches */}
+                    <Route
+                    path="/new-post"
+                    component = {NewPost}
+                    />
+                    <Route
+                    path="/posts"
+                    component = {Posts}
+                    />
+                    <Redirect from='/' to='posts'/>
+                    {/* <Route 
+                    path="/" //so that we redirect the user to posts compoenent eve if he is at the root of the path (can do it in Redirect ^^)
+                    component = {Posts}
+                    /> */}
+
+                    {/* <Route
+                    path="/:id" /* (^^ url:new-post) 
+                    exact
+                    component = {FullPost}
+                    /> */}
+                </Switch>
                 {/* <Route
                 path="/" //tell router does the path start with this?
                 exact //is complete path like this?
                 render = {()=> <h1>Home</h1>} //what to render on the screen
                 />
                 <Route
-                path="/" //tell router does the path start with this?
-                // no exact -> does path had this prefix (in this case '/')
-                render = {()=> <h1>Home2</h1>} //what to render on the screen
+                // no exact -> does path has this prefix (in this case '/')
                 /> */}
             </div>
         );
